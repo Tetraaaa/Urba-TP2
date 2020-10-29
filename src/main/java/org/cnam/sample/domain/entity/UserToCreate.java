@@ -1,12 +1,17 @@
 package org.cnam.sample.domain.entity;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
 
-public class AccountToCreate {
+public class UserToCreate {
 
-    public String data;
+    public String firstname;
 
-    public AccountToCreate(String data) {
-        this.data = data;
+    public String lastname;
+
+    public ArrayList<Account> accounts;
+
+    public UserToCreate(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 }

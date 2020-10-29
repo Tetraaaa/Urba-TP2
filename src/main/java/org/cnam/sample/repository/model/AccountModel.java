@@ -26,7 +26,7 @@ public class AccountModel {
         this.money = money;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -34,7 +34,7 @@ public class AccountModel {
         this.id = id;
     }
 
-    public long getMoney() {
+    public Long getMoney() {
         return money;
     }
 

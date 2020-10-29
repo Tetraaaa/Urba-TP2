@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    AccountService sampleService;
+    AccountService accountService;
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<AccountResponse> getSample(@PathVariable("id") Long id) {
-        Account accountFound = sampleService.getById(id);
+    public ResponseEntity<AccountResponse> getAccount(@PathVariable("id") Long id) {
+        Account accountFound = accountService.getById(id);
 
         AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money);
 
@@ -29,10 +29,10 @@ public class AccountController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<AccountResponse> createSample(@RequestBody AccountToCreateRequest accountToCreateRequest) {
+    public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountToCreateRequest accountToCreateRequest) {
         AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.money);
 
-        Account accountCreated = sampleService.create(accountToCreate);
+        Account accountCreated = accountService.create(accountToCreate);
 
         AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money);
 

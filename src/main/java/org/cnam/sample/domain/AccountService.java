@@ -14,10 +14,10 @@ import javax.transaction.Transactional;
 public class AccountService {
 
     @Autowired
-    private AccountRepository sampleRepository;
+    private AccountRepository accountRepository;
 
     public Account getById(Long id) {
-        AccountModel accountModelFound = sampleRepository.getOne(id);
+        AccountModel accountModelFound = accountRepository.getOne(id);
 
         return new Account(accountModelFound.getId(), accountModelFound.getMoney());
     }
@@ -25,7 +25,7 @@ public class AccountService {
     public Account create(AccountToCreate accountToCreate) {
         AccountModel accountModelToCreate = new AccountModel(accountToCreate.money);
 
-        AccountModel accountModelCreated = sampleRepository.save(accountModelToCreate);
+        AccountModel accountModelCreated = accountRepository.save(accountModelToCreate);
 
         return new Account(accountModelCreated.getId(), accountModelCreated.getMoney());
     }

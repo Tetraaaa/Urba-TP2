@@ -1,16 +1,21 @@
 package org.cnam.sample.domain.entity;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
 
-public class Account {
+public class User {
 
     public Long id;
 
-    public String data;
+    public String lastname;
 
-    public Account(Long id, String data) {
+    public String firstname;
+
+    public ArrayList<Account> accounts;
+
+    public User(Long id, String firstname, String lastname) {
         this.id = id;
-        this.data = data;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.accounts = new ArrayList<Account>();
     }
-
 }
