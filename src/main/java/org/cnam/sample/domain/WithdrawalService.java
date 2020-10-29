@@ -10,9 +10,12 @@ import org.cnam.sample.repository.model.DepositModel;
 import org.cnam.sample.repository.model.UserModel;
 import org.cnam.sample.repository.model.WithdrawalModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,10 +38,14 @@ public class WithdrawalService {
 
     public Withdrawal getById(Long id)
     {
-        WithdrawalModel withdrawalModelFound = withdrawalRepository.getOne(id);
-        User beneficiaire = userService.getById(withdrawalModelFound.getBeneficiaire().getId());
-        Account account = accountService.getById(withdrawalModelFound.getAccount().getId());
-        return new Withdrawal(withdrawalModelFound.getId(), withdrawalModelFound.getAmount(), beneficiaire, account);
+        Optional<WithdrawalModel> withdrawalModelFound = withdrawalRepository.findById(id);
+        if(!withdrawalModelFound.isPresent()) return null;
+
+        WithdrawalModel modelFound = withdrawalModelFound.get();
+        User beneficiaire = userService.getById(modelFound.getBeneficiaire().getId());
+        Account account = accountService.getById(modelFound.getAccount().getId());
+
+        return new Withdrawal(modelFound.getId(), modelFound.getAmount(), beneficiaire, account);
     }
 
     public Withdrawal create(WithdrawalToCreate withdrawalToCreate)

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.websocket.server.PathParam;
 
@@ -36,6 +37,7 @@ public class WithdrawalController {
     @ResponseBody
     public ResponseEntity<WithdrawalResponse> getWithdrawal(@PathVariable("id") Long id) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
+        if(withdrawalFound == null) return ResponseEntity.notFound().build();
 
         WithdrawalResponse withdrawalResponse = new WithdrawalResponse(withdrawalFound.id, withdrawalFound.amount, withdrawalFound.beneficiaire, withdrawalFound.account);
 
