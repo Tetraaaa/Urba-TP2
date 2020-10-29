@@ -47,7 +47,7 @@ public class AccountService {
 
     public void delete(Account accountToDelete) {
         UserModel userModel = new UserModel(accountToDelete.user);
-        
+
         AccountModel accountModelToDelete = new AccountModel(accountToDelete.id, accountToDelete.money, userModel);
 
         accountRepository.delete(accountModelToDelete);
