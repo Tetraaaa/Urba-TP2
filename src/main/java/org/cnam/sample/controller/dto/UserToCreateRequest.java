@@ -10,7 +10,7 @@ public class UserToCreateRequest {
     public String firstname;
 
     @JsonCreator
-    public UserToCreateRequest(@JsonProperty("lastname") String firstname, @JsonProperty("firstname") String lastname) {
+    public UserToCreateRequest(@JsonProperty("firstname") String firstname, @JsonProperty("lastname") String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
