@@ -41,7 +41,7 @@ public class AccountController {
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity<AccountResponse> updateAccount(@PathVariable("id") Long id, @PathParam("money") Long money, @PathParam("userid") Long userId) {
         Account accountFound = accountService.getById(id);
@@ -53,7 +53,7 @@ public class AccountController {
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity deleteAccount(@PathVariable("id") Long id) {
         Account accountFound = accountService.getById(id);

@@ -53,7 +53,7 @@ public class DepositController {
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity<DepositResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("depositaireId") Long depositaireId, @PathParam("accountId") Long accountId) {
         Deposit depositFound = depositService.getById(id);
@@ -65,7 +65,7 @@ public class DepositController {
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity deleteDeposit(@PathVariable("id") Long id) {
         Deposit depositFound = depositService.getById(id);

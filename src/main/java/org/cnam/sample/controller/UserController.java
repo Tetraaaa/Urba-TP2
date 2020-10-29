@@ -46,7 +46,7 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @PathParam("firstname") String firstname, @PathParam("lastname") String lastname) {
         User userFound = userService.getById(id);
@@ -58,7 +58,7 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         User userFound = userService.getById(id);

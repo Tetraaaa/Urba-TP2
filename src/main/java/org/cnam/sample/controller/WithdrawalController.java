@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.websocket.server.PathParam;
 
 @RestController
-@RequestMapping("/withdraw")
+@RequestMapping("/withdrawal")
 public class WithdrawalController {
 
     @Autowired
@@ -54,7 +54,7 @@ public class WithdrawalController {
         return new ResponseEntity<>(withdrawalResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity<WithdrawalResponse> updateWithdrawal(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
@@ -66,7 +66,7 @@ public class WithdrawalController {
         return new ResponseEntity<>(withdrawalResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity deleteWithdrawal(@PathVariable("id") Long id) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
