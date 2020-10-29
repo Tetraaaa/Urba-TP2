@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -35,6 +37,18 @@ public class AccountController {
         Account accountCreated = accountService.create(accountToCreate);
 
         AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money, accountCreated.user);
+
+        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<AccountResponse> updateAccount(@PathVariable("id") Long id, @PathParam("money") Long money, @PathParam("userid") Long userId) {
+        Account accountFound = accountService.getById(id);
+
+        Account accountUpdate = accountService.update(accountFound, money, userId);
+
+        AccountResponse accountResponse = new AccountResponse(accountUpdate.id, accountUpdate.money, accountUpdate.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }

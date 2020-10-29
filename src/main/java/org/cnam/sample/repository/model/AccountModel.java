@@ -17,7 +17,7 @@ public class AccountModel {
     private Long money;
 
     @ManyToOne
-    @JoinColumn( name = "userId" , insertable = false, updatable = false)
+    @JoinColumn( name = "userId" , insertable = false, updatable = true)
     private UserModel user;
 
     public AccountModel() {

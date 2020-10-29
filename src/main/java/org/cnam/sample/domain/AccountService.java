@@ -37,4 +37,12 @@ public class AccountService {
         return new Account(accountModelCreated.getId(), accountModelCreated.getMoney(), userService.getById(userModel.getId()));
     }
 
+    public Account update(Account accountToUpdate, Long money, Long userId) {
+        AccountModel accountModelToUpdate = new AccountModel(accountToUpdate.id, money, new UserModel(userService.getById(userId)));
+
+        AccountModel accountModelUpdated = accountRepository.save(accountModelToUpdate);
+
+        return new Account(accountModelUpdated.getId(), accountModelUpdated.getMoney(), userService.getById(accountModelUpdated.getUser().getId()));
+    }
+
 }
