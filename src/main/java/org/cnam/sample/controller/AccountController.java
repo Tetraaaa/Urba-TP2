@@ -23,6 +23,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<AccountResponse> getAccount(@PathVariable("id") Long id) {
         Account accountFound = accountService.getById(id);
+        if(accountFound == null) return ResponseEntity.notFound().build();
 
         AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money, accountFound.user);
 
@@ -45,6 +46,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<AccountResponse> updateAccount(@PathVariable("id") Long id, @PathParam("money") Long money, @PathParam("userId") Long userId) {
         Account accountFound = accountService.getById(id);
+        if(accountFound == null) return ResponseEntity.notFound().build();
 
         Account accountUpdate = accountService.update(accountFound, money, userId);
 
@@ -57,6 +59,7 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity deleteAccount(@PathVariable("id") Long id) {
         Account accountFound = accountService.getById(id);
+        if(accountFound == null) return ResponseEntity.notFound().build();
 
         accountService.delete(accountFound);
 
