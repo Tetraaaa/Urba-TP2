@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -44,4 +46,25 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @PathParam("firstname") String firstname, @PathParam("lastname") String lastname) {
+        User userFound = userService.getById(id);
+
+        User userUpdate = userService.update(userFound, firstname, lastname);
+
+        UserResponse userResponse = new UserResponse(userUpdate.id, userUpdate.firstname, userUpdate.lastname);
+
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+        User userFound = userService.getById(id);
+
+        userService.delete(userFound);
+
+        return ResponseEntity.ok().build();
+    }
 }
