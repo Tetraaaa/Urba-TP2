@@ -53,4 +53,13 @@ public class AccountController {
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity updateAccount(@PathVariable("id") Long id) {
+        Account accountFound = accountService.getById(id);
+
+        accountService.delete(accountFound);
+
+        return ResponseEntity.ok().build();
+    }
 }

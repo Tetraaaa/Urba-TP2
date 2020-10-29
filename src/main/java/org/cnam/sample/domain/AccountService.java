@@ -45,4 +45,11 @@ public class AccountService {
         return new Account(accountModelUpdated.getId(), accountModelUpdated.getMoney(), userService.getById(accountModelUpdated.getUser().getId()));
     }
 
+    public void delete(Account accountToDelete) {
+        UserModel userModel = new UserModel(accountToDelete.user);
+        
+        AccountModel accountModelToDelete = new AccountModel(accountToDelete.id, accountToDelete.money, userModel);
+
+        accountRepository.delete(accountModelToDelete);
+    }
 }
