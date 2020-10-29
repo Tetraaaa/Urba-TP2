@@ -1,5 +1,7 @@
 package org.cnam.sample.repository.model;
 
+import org.cnam.sample.domain.entity.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,16 +16,22 @@ public class AccountModel {
     @Column(name = "money")
     private Long money;
 
+    @ManyToOne
+    @JoinColumn( name = "userId" , insertable = false, updatable = false)
+    private UserModel user;
+
     public AccountModel() {
     }
 
-    public AccountModel(Long money) {
+    public AccountModel(Long money, UserModel user) {
         this.money = money;
+        this.user = user;
     }
 
-    public AccountModel(Long id, Long money) {
+    public AccountModel(Long id, Long money, UserModel user) {
         this.id = id;
         this.money = money;
+        this.user = user;
     }
 
     public Long getId() {
@@ -40,5 +48,13 @@ public class AccountModel {
 
     public void setMoney(Long money) {
         this.money = money;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

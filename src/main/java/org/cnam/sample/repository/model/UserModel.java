@@ -20,24 +20,20 @@ public class UserModel {
     @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "accounts")
-    private ArrayList<Account> accounts;
+    //@OneToMany( targetEntity=AccountModel.class, mappedBy="user" )
+    //private List<Command> commands = new ArrayList<>();
 
-    public UserModel() {
-        this.accounts = new ArrayList<Account>();
-    }
+    public UserModel() {}
 
     public UserModel(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.accounts = new ArrayList<Account>();
     }
 
     public UserModel(Long id, String firstname, String lastname) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.accounts = new ArrayList<Account>();
     }
 
     public Long getId() {
@@ -59,20 +55,4 @@ public class UserModel {
     }
 
     public void setLastname(String lastname) { this.lastname = lastname; }
-
-    public ArrayList<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void addAccount(Account account) {
-        if(!this.accounts.contains(account)) {
-            this.accounts.add(account);
-        }
-    }
-
-    public void removeAccount(Account account) {
-        if(this.accounts.contains(account)) {
-            this.accounts.remove(account);
-        }
-    }
 }

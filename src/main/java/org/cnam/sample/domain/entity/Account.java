@@ -8,9 +8,12 @@ public class Account {
 
     public Long money;
 
-    public Account(Long id, Long money) {
+    public User user;
+
+    public Account(Long id, Long money, User user) {
         this.id = id;
         this.money = money;
+        this.user = user;
     }
 
 }

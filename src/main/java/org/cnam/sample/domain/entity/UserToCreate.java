@@ -8,8 +8,6 @@ public class UserToCreate {
 
     public String lastname;
 
-    public ArrayList<Account> accounts;
-
     public UserToCreate(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;

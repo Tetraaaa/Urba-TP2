@@ -10,12 +10,9 @@ public class User {
 
     public String firstname;
 
-    public ArrayList<Account> accounts;
-
     public User(Long id, String firstname, String lastname) {
         this.id = id;
         this.lastname = lastname;
         this.firstname = firstname;
-        this.accounts = new ArrayList<Account>();
     }
 }

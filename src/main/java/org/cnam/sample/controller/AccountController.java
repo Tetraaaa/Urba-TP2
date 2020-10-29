@@ -22,7 +22,7 @@ public class AccountController {
     public ResponseEntity<AccountResponse> getAccount(@PathVariable("id") Long id) {
         Account accountFound = accountService.getById(id);
 
-        AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money);
+        AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money, accountFound.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
@@ -30,11 +30,11 @@ public class AccountController {
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountToCreateRequest accountToCreateRequest) {
-        AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.money);
+        AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.money, accountToCreateRequest.user);
 
         Account accountCreated = accountService.create(accountToCreate);
 
-        AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money);
+        AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money, accountCreated.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
