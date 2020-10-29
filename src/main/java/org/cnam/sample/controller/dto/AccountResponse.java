@@ -2,12 +2,12 @@ package org.cnam.sample.controller.dto;
 
 public class AccountResponse {
 
-    public long id;
+    public Long id;
 
-    public String data;
+    public Long money;
 
-    public AccountResponse(long id, String data) {
+    public AccountResponse(Long id, Long money) {
         this.id = id;
-        this.data = data;
+        this.money = money;
     }
 }

@@ -11,22 +11,22 @@ public class AccountModel {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "data")
-    private String data;
+    @Column(name = "money")
+    private Long money;
 
     public AccountModel() {
     }
 
-    public AccountModel(String data) {
-        this.data = data;
+    public AccountModel(Long money) {
+        this.money = money;
     }
 
-    public AccountModel(Long id, String data) {
+    public AccountModel(Long id, Long money) {
         this.id = id;
-        this.data = data;
+        this.money = money;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -34,11 +34,11 @@ public class AccountModel {
         this.id = id;
     }
 
-    public String getData() {
-        return data;
+    public long getMoney() {
+        return money;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setMoney(Long money) {
+        this.money = money;
     }
 }

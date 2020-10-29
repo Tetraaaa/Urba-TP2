@@ -19,15 +19,15 @@ public class AccountService {
     public Account getById(Long id) {
         AccountModel accountModelFound = sampleRepository.getOne(id);
 
-        return new Account(accountModelFound.getId(), accountModelFound.getData());
+        return new Account(accountModelFound.getId(), accountModelFound.getMoney());
     }
 
     public Account create(AccountToCreate accountToCreate) {
-        AccountModel accountModelToCreate = new AccountModel(accountToCreate.data);
+        AccountModel accountModelToCreate = new AccountModel(accountToCreate.money);
 
         AccountModel accountModelCreated = sampleRepository.save(accountModelToCreate);
 
-        return new Account(accountModelCreated.getId(), accountModelCreated.getData());
+        return new Account(accountModelCreated.getId(), accountModelCreated.getMoney());
     }
 
 }

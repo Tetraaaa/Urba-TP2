@@ -6,11 +6,11 @@ public class Account {
 
     public Long id;
 
-    public Long money;
+    public String data;
 
-    public Account(Long id, Long money) {
+    public Account(Long id, String data) {
         this.id = id;
-        this.money = money;
+        this.data = data;
     }
 
 }

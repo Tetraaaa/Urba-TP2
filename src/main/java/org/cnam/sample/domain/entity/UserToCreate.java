@@ -4,9 +4,9 @@ import javax.persistence.Column;
 
 public class AccountToCreate {
 
-    public Long money;
+    public String data;
 
-    public AccountToCreate(Long money) {
-        this.money = money;
+    public AccountToCreate(String data) {
+        this.data = data;
     }
 }

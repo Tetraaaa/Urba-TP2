@@ -19,10 +19,10 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<AccountResponse> getSample(@PathVariable("id") long id) {
+    public ResponseEntity<AccountResponse> getSample(@PathVariable("id") Long id) {
         Account accountFound = sampleService.getById(id);
 
-        AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.data);
+        AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
@@ -30,11 +30,11 @@ public class AccountController {
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<AccountResponse> createSample(@RequestBody AccountToCreateRequest accountToCreateRequest) {
-        AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.data);
+        AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.money);
 
         Account accountCreated = sampleService.create(accountToCreate);
 
-        AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.data);
+        AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }

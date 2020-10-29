@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories("org.cnam.sample.repository")
 @EnableTransactionManagement
 @EnableAutoConfiguration
-public class AccountSpringBootApplication {
+public class TP2SpringBootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AccountSpringBootApplication.class, args);
+        SpringApplication.run(TP2SpringBootApplication.class, args);
     }
 
 }

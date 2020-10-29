@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountToCreateRequest {
 
-    public String data;
+    public Long money;
 
     @JsonCreator
-    public AccountToCreateRequest(@JsonProperty("data") String data) {
-        this.data = data;
+    public AccountToCreateRequest(@JsonProperty("money") Long money) {
+        this.money = money;
     }
 }
