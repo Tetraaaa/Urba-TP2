@@ -1,0 +1,1 @@
+INSERT INTO sample (id, data) VALUES (1, 'Test Init Data on Start')
