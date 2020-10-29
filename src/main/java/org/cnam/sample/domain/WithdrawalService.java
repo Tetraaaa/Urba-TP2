@@ -41,22 +41,22 @@ public class WithdrawalService {
         return new Withdrawal(withdrawalModelFound.getId(), withdrawalModelFound.getAmount(), beneficiaire, account);
     }
 
-    public WithdrawalModel create(WithdrawalToCreate withdrawalToCreate)
+    public Withdrawal create(WithdrawalToCreate withdrawalToCreate)
     {
         UserModel beneficiaire = new UserModel(withdrawalToCreate.beneficiaire.id, withdrawalToCreate.beneficiaire.firstname, withdrawalToCreate.beneficiaire.lastname);
         AccountModel account = new AccountModel(withdrawalToCreate.account.id, withdrawalToCreate.account.money, new UserModel(withdrawalToCreate.account.user.id, withdrawalToCreate.account.user.firstname, withdrawalToCreate.account.user.lastname));
 
         WithdrawalModel withdrawalCreated =  withdrawalRepository.save(new WithdrawalModel(withdrawalToCreate.amount, beneficiaire, account));
-        return withdrawalCreated;
+        return new Withdrawal(withdrawalCreated.getId(), withdrawalCreated.getAmount(), userService.getById(withdrawalCreated.getBeneficiaire().getId()), accountService.getById(withdrawalCreated.getAccount().getId()));
     }
 
-    public WithdrawalModel update(Withdrawal withdrawalToUpdate, Long amount, User beneficiaire, Account account)
+    public Withdrawal update(Withdrawal withdrawalToUpdate, Long amount, User beneficiaire, Account account)
     {
         UserModel beneficiaireModel = new UserModel(beneficiaire.id, beneficiaire.firstname, beneficiaire.lastname);
         AccountModel accountModel = new AccountModel(account.id, account.money, new UserModel(withdrawalToUpdate.account.user.id, withdrawalToUpdate.account.user.firstname, withdrawalToUpdate.account.user.lastname));
         WithdrawalModel withdrawalModelToUpdate = new WithdrawalModel(withdrawalToUpdate.id, amount, beneficiaireModel, accountModel);
         WithdrawalModel withdrawalModelUpdated = withdrawalRepository.save(withdrawalModelToUpdate);
-        return withdrawalModelUpdated;
+        return new Withdrawal(withdrawalModelUpdated.getId(), withdrawalModelUpdated.getAmount(), userService.getById(withdrawalModelUpdated.getBeneficiaire().getId()), accountService.getById(withdrawalModelUpdated.getAccount().getId()));
     }
 
     public void delete(Withdrawal withdrawalToDelete)

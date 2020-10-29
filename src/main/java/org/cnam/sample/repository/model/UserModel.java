@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table(name = "user")
+
+@Table(name = "User")
 public class UserModel {
 
     @Id

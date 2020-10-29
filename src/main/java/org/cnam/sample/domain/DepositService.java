@@ -42,22 +42,24 @@ public class DepositService {
         return new Deposit(depositModelFound.getId(), depositModelFound.getAmount(), depositaire, account);
     }
 
-    public DepositModel create(DepositToCreate depositToCreate)
+    public Deposit create(DepositToCreate depositToCreate)
     {
         UserModel depositaire = new UserModel(depositToCreate.depositaire.id, depositToCreate.depositaire.firstname, depositToCreate.depositaire.lastname);
         AccountModel account = new AccountModel(depositToCreate.account.id, depositToCreate.account.money, new UserModel(depositToCreate.account.user.id, depositToCreate.account.user.firstname, depositToCreate.account.user.lastname));
 
         DepositModel depositCreated =  depositRepository.save(new DepositModel(depositToCreate.amount, depositaire, account));
-        return depositCreated;
+
+        return new Deposit(depositCreated.getId(), depositCreated.getAmount(), userService.getById(depositCreated.getDepositaire().getId()), accountService.getById(depositCreated.getAccount().getId()));
     }
 
-    public DepositModel update(Deposit depositToUpdate, Long amount, User depositaire, Account account)
+    public Deposit update(Deposit depositToUpdate, Long amount, User depositaire, Account account)
     {
         UserModel depositaireModel = new UserModel(depositaire.id, depositaire.firstname, depositaire.lastname);
         AccountModel accountModel = new AccountModel(account.id, account.money, new UserModel(depositToUpdate.account.user.id, depositToUpdate.account.user.firstname, depositToUpdate.account.user.lastname));
         DepositModel depositModelToUpdate = new DepositModel(depositToUpdate.id, amount, depositaireModel, accountModel);
         DepositModel depositModelUpdated = depositRepository.save(depositModelToUpdate);
-        return depositModelUpdated;
+
+        return new Deposit(depositModelUpdated.getId(), depositModelUpdated.getAmount(), userService.getById(depositModelUpdated.getDepositaire().getId()), accountService.getById(depositModelUpdated.getAccount().getId()));
     }
 
     public void delete(Deposit depositToDelete)

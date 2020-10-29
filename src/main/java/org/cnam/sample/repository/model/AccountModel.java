@@ -5,7 +5,8 @@ import org.cnam.sample.domain.entity.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "account")
+
+@Table(name = "Account")
 public class AccountModel {
 
     @Id
