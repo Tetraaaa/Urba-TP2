@@ -1,6 +1,7 @@
 package org.cnam.sample.repository.model;
 
 import org.cnam.sample.domain.entity.Account;
+import org.cnam.sample.domain.entity.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +25,12 @@ public class UserModel {
     //private List<Command> commands = new ArrayList<>();
 
     public UserModel() {}
+
+    public UserModel(User user) {
+        this.id = user.id;
+        this.firstname = user.firstname;
+        this.lastname = user.lastname;
+    }
 
     public UserModel(String firstname, String lastname) {
         this.firstname = firstname;

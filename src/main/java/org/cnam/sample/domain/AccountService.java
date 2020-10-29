@@ -20,26 +20,21 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public Account getById(Long id) {
         AccountModel accountModelFound = accountRepository.getOne(id);
 
-        UserModel userModelFound = userRepository.getOne(accountModelFound.getUser().getId());
-        User user = new User(userModelFound.getId(), userModelFound.getFirstname(), userModelFound.getLastname());
-
-        return new Account(accountModelFound.getId(), accountModelFound.getMoney(), user);
+        return new Account(accountModelFound.getId(), accountModelFound.getMoney(), userService.getById(accountModelFound.getUser().getId()));
     }
 
     public Account create(AccountToCreate accountToCreate) {
-        UserModel userModel = userRepository.getOne(accountToCreate.user.id);
+        UserModel userModel = new UserModel(accountToCreate.user);
         AccountModel accountModelToCreate = new AccountModel(accountToCreate.money, userModel);
 
         AccountModel accountModelCreated = accountRepository.save(accountModelToCreate);
 
-        User user = new User(userModel.getId(), userModel.getFirstname(), userModel.getLastname());
-
-        return new Account(accountModelCreated.getId(), accountModelCreated.getMoney(), user);
+        return new Account(accountModelCreated.getId(), accountModelCreated.getMoney(), userService.getById(userModel.getId()));
     }
 
 }
