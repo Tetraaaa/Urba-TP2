@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "sample")
-public class SampleModel {
+public class AccountModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +14,14 @@ public class SampleModel {
     @Column(name = "data")
     private String data;
 
-    public SampleModel() {
+    public AccountModel() {
     }
 
-    public SampleModel(String data) {
+    public AccountModel(String data) {
         this.data = data;
     }
 
-    public SampleModel(Long id, String data) {
+    public AccountModel(Long id, String data) {
         this.id = id;
         this.data = data;
     }

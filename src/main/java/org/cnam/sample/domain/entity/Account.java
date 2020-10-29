@@ -2,11 +2,15 @@ package org.cnam.sample.domain.entity;
 
 import javax.persistence.Column;
 
-public class SampleToCreate {
+public class Account {
+
+    public Long id;
 
     public String data;
 
-    public SampleToCreate(String data) {
+    public Account(Long id, String data) {
+        this.id = id;
         this.data = data;
     }
+
 }
