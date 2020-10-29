@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,9 +22,12 @@ public class UserService {
     private UserRepository userRepository;
 
     public User getById(Long id) {
-        UserModel userModelFound = userRepository.getOne(id);
+        Optional<UserModel> userModelFound = userRepository.findById(id);
+        if(!userModelFound.isPresent()) return null;
 
-        return new User(userModelFound.getId(), userModelFound.getFirstname(), userModelFound.getLastname());
+        UserModel modelFound = userModelFound.get();
+
+        return new User(modelFound.getId(), modelFound.getFirstname(), modelFound.getLastname());
     }
 
     public User create(UserToCreate userToCreate) {

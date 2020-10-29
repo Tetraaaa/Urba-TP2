@@ -28,6 +28,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<UserResponse> getUser(@PathVariable("id") Long id) {
         User userFound = userService.getById(id);
+        if(userFound == null) return ResponseEntity.notFound().build();
 
         UserResponse userResponse = new UserResponse(userFound.id, userFound.firstname, userFound.lastname);
 
@@ -50,6 +51,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @PathParam("firstname") String firstname, @PathParam("lastname") String lastname) {
         User userFound = userService.getById(id);
+        if(userFound == null) return ResponseEntity.notFound().build();
 
         User userUpdate = userService.update(userFound, firstname, lastname);
 
@@ -62,6 +64,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         User userFound = userService.getById(id);
+        if(userFound == null) return ResponseEntity.notFound().build();
 
         userService.delete(userFound);
 

@@ -7,10 +7,12 @@ import org.cnam.sample.repository.AccountRepository;
 import org.cnam.sample.repository.UserRepository;
 import org.cnam.sample.repository.model.AccountModel;
 import org.cnam.sample.repository.model.UserModel;
+import org.cnam.sample.repository.model.WithdrawalModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,9 +25,11 @@ public class AccountService {
     private UserService userService;
 
     public Account getById(Long id) {
-        AccountModel accountModelFound = accountRepository.getOne(id);
+        Optional<AccountModel> accountModelFound = accountRepository.findById(id);
+        if(!accountModelFound.isPresent()) return null;
 
-        return new Account(accountModelFound.getId(), accountModelFound.getMoney(), userService.getById(accountModelFound.getUser().getId()));
+        AccountModel modelFound = accountModelFound.get();
+        return new Account(modelFound.getId(), modelFound.getMoney(), userService.getById(modelFound.getUser().getId()));
     }
 
     public Account create(AccountToCreate accountToCreate) {
