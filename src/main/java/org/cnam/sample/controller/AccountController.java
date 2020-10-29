@@ -43,7 +43,7 @@ public class AccountController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<AccountResponse> updateAccount(@PathVariable("id") Long id, @PathParam("money") Long money, @PathParam("userid") Long userId) {
+    public ResponseEntity<AccountResponse> updateAccount(@PathVariable("id") Long id, @PathParam("money") Long money, @PathParam("userId") Long userId) {
         Account accountFound = accountService.getById(id);
 
         Account accountUpdate = accountService.update(accountFound, money, userId);

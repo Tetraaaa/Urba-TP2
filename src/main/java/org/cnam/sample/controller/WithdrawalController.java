@@ -56,7 +56,7 @@ public class WithdrawalController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<WithdrawalResponse> updateWithdrawal(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
+    public ResponseEntity<WithdrawalResponse> updateWithdrawal(@PathVariable("id") Long id, @PathParam("amount") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
 
         Withdrawal withdrawalUpdated = withdrawalService.update(withdrawalFound, amount, userService.getById(beneficiaireId), accountService.getById(accountId));

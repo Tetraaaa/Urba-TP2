@@ -55,7 +55,7 @@ public class DepositController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<DepositResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("depositaireId") Long depositaireId, @PathParam("accountId") Long accountId) {
+    public ResponseEntity<DepositResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("amount") Long amount, @PathParam("depositaireId") Long depositaireId, @PathParam("accountId") Long accountId) {
         Deposit depositFound = depositService.getById(id);
 
         Deposit depositUpdated = depositService.update(depositFound, amount, userService.getById(depositaireId), accountService.getById(accountId));
