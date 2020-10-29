@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
+@RestController
+@RequestMapping("/deposit")
 public class DepositController {
 
     @Autowired

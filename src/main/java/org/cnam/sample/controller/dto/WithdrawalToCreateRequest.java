@@ -13,7 +13,7 @@ public class WithdrawalToCreateRequest {
     public Account account;
 
     @JsonCreator
-    public WithdrawalToCreateRequest(@JsonProperty("amount") Long amount, @JsonProperty("depositaire") User beneficiaire, @JsonProperty("account") Account account) {
+    public WithdrawalToCreateRequest(@JsonProperty("amount") Long amount, @JsonProperty("beneficiaire") User beneficiaire, @JsonProperty("account") Account account) {
         this.amount = amount;
         this.beneficiaire = beneficiaire;
         this.account = account;
