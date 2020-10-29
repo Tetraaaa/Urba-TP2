@@ -60,6 +60,7 @@ public class WithdrawalController {
     @ResponseBody
     public ResponseEntity<WithdrawalResponse> updateWithdrawal(@PathVariable("id") Long id, @PathParam("amount") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
+        if(withdrawalFound == null) return ResponseEntity.notFound().build();
 
         Withdrawal withdrawalUpdated = withdrawalService.update(withdrawalFound, amount, userService.getById(beneficiaireId), accountService.getById(accountId));
 
@@ -72,6 +73,7 @@ public class WithdrawalController {
     @ResponseBody
     public ResponseEntity deleteWithdrawal(@PathVariable("id") Long id) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
+        if(withdrawalFound == null) return ResponseEntity.notFound().build();
 
         withdrawalService.delete(withdrawalFound);
 

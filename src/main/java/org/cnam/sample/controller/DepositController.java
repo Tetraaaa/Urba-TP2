@@ -35,9 +35,9 @@ public class DepositController {
     @ResponseBody
     public ResponseEntity<DepositResponse> getDeposit(@PathVariable("id") Long id) {
         Deposit depositFound = depositService.getById(id);
+        if(depositFound == null) return ResponseEntity.notFound().build();
 
         DepositResponse depositResponse = new DepositResponse(depositFound.id, depositFound.amount, depositFound.depositaire, depositFound.account);
-
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
 
@@ -57,6 +57,7 @@ public class DepositController {
     @ResponseBody
     public ResponseEntity<DepositResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("amount") Long amount, @PathParam("depositaireId") Long depositaireId, @PathParam("accountId") Long accountId) {
         Deposit depositFound = depositService.getById(id);
+        if(depositFound == null) return ResponseEntity.notFound().build();
 
         Deposit depositUpdated = depositService.update(depositFound, amount, userService.getById(depositaireId), accountService.getById(accountId));
 
@@ -69,6 +70,7 @@ public class DepositController {
     @ResponseBody
     public ResponseEntity deleteDeposit(@PathVariable("id") Long id) {
         Deposit depositFound = depositService.getById(id);
+        if(depositFound == null) return ResponseEntity.notFound().build();
 
         depositService.delete(depositFound);
 

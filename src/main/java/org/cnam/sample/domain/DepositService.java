@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,10 +37,13 @@ public class DepositService {
 
     public Deposit getById(Long id)
     {
-        DepositModel depositModelFound = depositRepository.getOne(id);
-        User depositaire = userService.getById(depositModelFound.getDepositaire().getId());
-        Account account = accountService.getById(depositModelFound.getAccount().getId());
-        return new Deposit(depositModelFound.getId(), depositModelFound.getAmount(), depositaire, account);
+        Optional<DepositModel> depositModelFound = depositRepository.findById(id);
+        if(!depositModelFound.isPresent()) return null;
+
+        DepositModel modelFound = depositModelFound.get();
+        User depositaire = userService.getById(modelFound.getDepositaire().getId());
+        Account account = accountService.getById(modelFound.getAccount().getId());
+        return new Deposit(modelFound.getId(), modelFound.getAmount(), depositaire, account);
     }
 
     public Deposit create(DepositToCreate depositToCreate)
