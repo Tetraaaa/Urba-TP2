@@ -28,6 +28,12 @@ public class WithdrawalModel {
 
     public WithdrawalModel(){}
 
+    public WithdrawalModel(Long amount, UserModel beneficiaire, AccountModel account) {
+        this.amount = amount;
+        this.beneficiaire = beneficiaire;
+        this.account = account;
+    }
+
     public WithdrawalModel(Long id, Long amount, UserModel beneficiaire, AccountModel account) {
         this.id = id;
         this.amount = amount;

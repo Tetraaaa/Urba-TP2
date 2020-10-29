@@ -3,16 +3,13 @@ package org.cnam.sample.domain.entity;
 import javax.persistence.Column;
 
 public class Withdrawal {
-    private Long id;
+    public Long id;
 
-    @Column(name = "amount")
-    private Long amount;
+    public Long amount;
 
-    @Column(name = "beneficiaire")
-    private User beneficiaire;
+    public User beneficiaire;
 
-    @Column(name = "account")
-    private Account account;
+    public Account account;
 
     public Withdrawal(Long id, Long amount, User beneficiaire, Account account) {
         this.id = id;
