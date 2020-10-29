@@ -1,1 +1,1 @@
-INSERT INTO sample (id, data) VALUES (1, 'Test Init Data on Start')
+INSERT INTO account (id, money) VALUES (1, 0)

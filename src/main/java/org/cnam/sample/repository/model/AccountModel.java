@@ -3,7 +3,7 @@ package org.cnam.sample.repository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sample")
+@Table(name = "account")
 public class AccountModel {
 
     @Id
