@@ -34,7 +34,7 @@ public class WithdrawalController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<WithdrawalResponse> getDeposit(@PathVariable("id") Long id) {
+    public ResponseEntity<WithdrawalResponse> getWithdrawal(@PathVariable("id") Long id) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
 
         WithdrawalResponse withdrawalResponse = new WithdrawalResponse(withdrawalFound.id, withdrawalFound.amount, withdrawalFound.beneficiaire, withdrawalFound.account);
@@ -44,7 +44,7 @@ public class WithdrawalController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<WithdrawalResponse> deleteDeposit(@RequestBody WithdrawalToCreateRequest withdrawalToCreateRequest) {
+    public ResponseEntity<WithdrawalResponse> createWithdrawal(@RequestBody WithdrawalToCreateRequest withdrawalToCreateRequest) {
         WithdrawalToCreate withdrawalToCreate = new WithdrawalToCreate(withdrawalToCreateRequest.amount, withdrawalToCreateRequest.beneficiaire, withdrawalToCreateRequest.account);
 
         Withdrawal withdrawalCreated = withdrawalService.create(withdrawalToCreate);
@@ -56,7 +56,7 @@ public class WithdrawalController {
 
     @PostMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<WithdrawalResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
+    public ResponseEntity<WithdrawalResponse> updateWithdrawal(@PathVariable("id") Long id, @PathParam("money") Long amount, @PathParam("beneficiaireId") Long beneficiaireId, @PathParam("accountId") Long accountId) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
 
         Withdrawal withdrawalUpdated = withdrawalService.update(withdrawalFound, amount, userService.getById(beneficiaireId), accountService.getById(accountId));
@@ -68,7 +68,7 @@ public class WithdrawalController {
 
     @GetMapping("/delete/{id}")
     @ResponseBody
-    public ResponseEntity deleteAccount(@PathVariable("id") Long id) {
+    public ResponseEntity deleteWithdrawal(@PathVariable("id") Long id) {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
 
         withdrawalService.delete(withdrawalFound);

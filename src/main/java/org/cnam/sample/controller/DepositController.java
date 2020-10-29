@@ -43,7 +43,7 @@ public class DepositController {
 
     @PostMapping("/create")
     @ResponseBody
-    public ResponseEntity<DepositResponse> deleteDeposit(@RequestBody DepositToCreateRequest depositToCreateRequest) {
+    public ResponseEntity<DepositResponse> createDeposit(@RequestBody DepositToCreateRequest depositToCreateRequest) {
         DepositToCreate depositToCreate = new DepositToCreate(depositToCreateRequest.amount, depositToCreateRequest.depositaire, depositToCreateRequest.account);
 
         Deposit depositCreated = depositService.create(depositToCreate);
@@ -67,7 +67,7 @@ public class DepositController {
 
     @GetMapping("/delete/{id}")
     @ResponseBody
-    public ResponseEntity deleteAccount(@PathVariable("id") Long id) {
+    public ResponseEntity deleteDeposit(@PathVariable("id") Long id) {
         Deposit depositFound = depositService.getById(id);
 
         depositService.delete(depositFound);
