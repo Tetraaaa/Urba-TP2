@@ -34,4 +34,17 @@ public class UserService {
         return new User(userModelCreated.getId(), userModelCreated.getFirstname(), userModelCreated.getLastname());
     }
 
+    public User update(User userToUpdate, String firstname, String lastname) {
+        UserModel userModelToUpdate = new UserModel(userToUpdate.id, firstname, lastname);
+
+        UserModel userModelUpdated = userRepository.save(userModelToUpdate);
+
+        return new User(userModelUpdated.getId(), userModelUpdated.getFirstname(), userModelUpdated.getLastname());
+    }
+
+    public void delete(User userToDelete) {
+        UserModel userModel = new UserModel(userToDelete);
+
+        userRepository.delete(userModel);
+    }
 }
