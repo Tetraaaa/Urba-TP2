@@ -1,8 +1,10 @@
 package org.cnam.sample.domain.entity;
 
-import javax.persistence.Column;
+public class WithdrawalResult {
 
-public class WithdrawalToCreate {
+    public boolean ok;
+
+    public Long id;
 
     public Long amount;
 
@@ -10,7 +12,9 @@ public class WithdrawalToCreate {
 
     public Account account;
 
-    public WithdrawalToCreate(Long amount, Account beneficiaire, Account account) {
+    public WithdrawalResult(boolean ok, Long id, Long amount, Account beneficiaire, Account account) {
+        this.id = id;
+        this.ok = ok;
         this.amount = amount;
         this.beneficiaire = beneficiaire;
         this.account = account;

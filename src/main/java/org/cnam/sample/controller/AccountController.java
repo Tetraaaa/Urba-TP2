@@ -4,6 +4,7 @@ import org.cnam.sample.controller.dto.AccountToCreateRequest;
 import org.cnam.sample.controller.dto.AccountResponse;
 import org.cnam.sample.domain.AccountService;
 import org.cnam.sample.domain.entity.Account;
+import org.cnam.sample.domain.entity.AccountResult;
 import org.cnam.sample.domain.entity.AccountToCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class AccountController {
         Account accountFound = accountService.getById(id);
         if(accountFound == null) return ResponseEntity.notFound().build();
 
-        AccountResponse accountResponse = new AccountResponse(accountFound.id, accountFound.money, accountFound.user);
+        AccountResponse accountResponse = new AccountResponse(true, accountFound.id, accountFound.money, accountFound.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
@@ -35,9 +36,9 @@ public class AccountController {
     public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountToCreateRequest accountToCreateRequest) {
         AccountToCreate accountToCreate = new AccountToCreate(accountToCreateRequest.money, accountToCreateRequest.user);
 
-        Account accountCreated = accountService.create(accountToCreate);
+        AccountResult accountResult = accountService.create(accountToCreate);
 
-        AccountResponse accountResponse = new AccountResponse(accountCreated.id, accountCreated.money, accountCreated.user);
+        AccountResponse accountResponse = new AccountResponse(accountResult.ok, accountResult.id, accountResult.money, accountResult.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
@@ -50,7 +51,7 @@ public class AccountController {
 
         Account accountUpdate = accountService.update(accountFound, money, userId);
 
-        AccountResponse accountResponse = new AccountResponse(accountUpdate.id, accountUpdate.money, accountUpdate.user);
+        AccountResponse accountResponse = new AccountResponse(true, accountUpdate.id, accountUpdate.money, accountUpdate.user);
 
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }

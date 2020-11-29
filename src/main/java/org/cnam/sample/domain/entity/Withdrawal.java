@@ -7,11 +7,11 @@ public class Withdrawal {
 
     public Long amount;
 
-    public User beneficiaire;
+    public Account beneficiaire;
 
     public Account account;
 
-    public Withdrawal(Long id, Long amount, User beneficiaire, Account account) {
+    public Withdrawal(Long id, Long amount, Account beneficiaire, Account account) {
         this.id = id;
         this.amount = amount;
         this.beneficiaire = beneficiaire;

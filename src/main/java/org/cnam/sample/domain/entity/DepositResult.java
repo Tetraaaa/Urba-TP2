@@ -1,9 +1,7 @@
-package org.cnam.sample.controller.dto;
+package org.cnam.sample.domain.entity;
 
-import org.cnam.sample.domain.entity.Account;
-import org.cnam.sample.domain.entity.User;
+public class DepositResult {
 
-public class DepositResponse {
     public boolean ok;
 
     public Long id;
@@ -14,7 +12,7 @@ public class DepositResponse {
 
     public Account account;
 
-    public DepositResponse(boolean ok, Long id, Long amount, User depositaire, Account account) {
+    public DepositResult(boolean ok, Long id, Long amount, User depositaire, Account account) {
         this.ok = ok;
         this.id = id;
         this.amount = amount;

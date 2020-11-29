@@ -1,6 +1,7 @@
 package org.cnam.sample.domain;
 
 import org.cnam.sample.domain.entity.Account;
+import org.cnam.sample.domain.entity.AccountResult;
 import org.cnam.sample.domain.entity.AccountToCreate;
 import org.cnam.sample.domain.entity.User;
 import org.cnam.sample.repository.AccountRepository;
@@ -32,13 +33,22 @@ public class AccountService {
         return new Account(modelFound.getId(), modelFound.getMoney(), userService.getById(modelFound.getUser().getId()));
     }
 
-    public Account create(AccountToCreate accountToCreate) {
-        UserModel userModel = new UserModel(accountToCreate.user);
-        AccountModel accountModelToCreate = new AccountModel(accountToCreate.money, userModel);
+    public AccountResult create(AccountToCreate accountToCreate) {
+        if(accountToCreate.user != null && accountToCreate.money != null)
+        {
+            UserModel userModel = new UserModel(accountToCreate.user);
+            AccountModel accountModelToCreate = new AccountModel(accountToCreate.money, userModel);
 
-        AccountModel accountModelCreated = accountRepository.save(accountModelToCreate);
+            AccountModel accountModelCreated = accountRepository.save(accountModelToCreate);
 
-        return new Account(accountModelCreated.getId(), accountModelCreated.getMoney(), userService.getById(userModel.getId()));
+            return new AccountResult(true, accountModelCreated.getId(), accountModelCreated.getMoney(), userService.getById(userModel.getId()));
+        }
+        else
+        {
+            return new AccountResult(false, null, accountToCreate.money, accountToCreate.user);
+        }
+
+
     }
 
     public Account update(Account accountToUpdate, Long money, Long userId) {

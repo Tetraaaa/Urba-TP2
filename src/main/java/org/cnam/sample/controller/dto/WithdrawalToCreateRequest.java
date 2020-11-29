@@ -8,12 +8,12 @@ import org.cnam.sample.domain.entity.User;
 public class WithdrawalToCreateRequest {
     public Long amount;
 
-    public User beneficiaire;
+    public Account beneficiaire;
 
     public Account account;
 
     @JsonCreator
-    public WithdrawalToCreateRequest(@JsonProperty("amount") Long amount, @JsonProperty("beneficiaire") User beneficiaire, @JsonProperty("account") Account account) {
+    public WithdrawalToCreateRequest(@JsonProperty("amount") Long amount, @JsonProperty("beneficiaire") Account beneficiaire, @JsonProperty("account") Account account) {
         this.amount = amount;
         this.beneficiaire = beneficiaire;
         this.account = account;

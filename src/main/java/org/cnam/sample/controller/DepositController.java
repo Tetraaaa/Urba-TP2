@@ -7,10 +7,7 @@ import org.cnam.sample.controller.dto.DepositToCreateRequest;
 import org.cnam.sample.domain.AccountService;
 import org.cnam.sample.domain.DepositService;
 import org.cnam.sample.domain.UserService;
-import org.cnam.sample.domain.entity.Account;
-import org.cnam.sample.domain.entity.AccountToCreate;
-import org.cnam.sample.domain.entity.Deposit;
-import org.cnam.sample.domain.entity.DepositToCreate;
+import org.cnam.sample.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +34,7 @@ public class DepositController {
         Deposit depositFound = depositService.getById(id);
         if(depositFound == null) return ResponseEntity.notFound().build();
 
-        DepositResponse depositResponse = new DepositResponse(depositFound.id, depositFound.amount, depositFound.depositaire, depositFound.account);
+        DepositResponse depositResponse = new DepositResponse(true, depositFound.id, depositFound.amount, depositFound.depositaire, depositFound.account);
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
 
@@ -46,9 +43,9 @@ public class DepositController {
     public ResponseEntity<DepositResponse> createDeposit(@RequestBody DepositToCreateRequest depositToCreateRequest) {
         DepositToCreate depositToCreate = new DepositToCreate(depositToCreateRequest.amount, depositToCreateRequest.depositaire, depositToCreateRequest.account);
 
-        Deposit depositCreated = depositService.create(depositToCreate);
+        DepositResult depositResult = depositService.create(depositToCreate);
 
-        DepositResponse depositResponse = new DepositResponse(depositCreated.id, depositCreated.amount, depositCreated.depositaire, depositCreated.account);
+        DepositResponse depositResponse = new DepositResponse(depositResult.ok, depositResult.id, depositResult.amount, depositResult.depositaire, depositResult.account);
 
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
@@ -61,7 +58,7 @@ public class DepositController {
 
         Deposit depositUpdated = depositService.update(depositFound, amount, userService.getById(depositaireId), accountService.getById(accountId));
 
-        DepositResponse depositResponse = new DepositResponse(depositUpdated.id, depositUpdated.amount, depositUpdated.depositaire, depositUpdated.account);
+        DepositResponse depositResponse = new DepositResponse(true, depositUpdated.id, depositUpdated.amount, depositUpdated.depositaire, depositUpdated.account);
 
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }

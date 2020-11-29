@@ -1,9 +1,6 @@
 package org.cnam.sample.domain;
 
-import org.cnam.sample.domain.entity.Account;
-import org.cnam.sample.domain.entity.Deposit;
-import org.cnam.sample.domain.entity.DepositToCreate;
-import org.cnam.sample.domain.entity.User;
+import org.cnam.sample.domain.entity.*;
 import org.cnam.sample.repository.AccountRepository;
 import org.cnam.sample.repository.DepositRepository;
 import org.cnam.sample.repository.UserRepository;
@@ -46,14 +43,22 @@ public class DepositService {
         return new Deposit(modelFound.getId(), modelFound.getAmount(), depositaire, account);
     }
 
-    public Deposit create(DepositToCreate depositToCreate)
+    public DepositResult create(DepositToCreate depositToCreate)
     {
-        UserModel depositaire = new UserModel(depositToCreate.depositaire.id, depositToCreate.depositaire.firstname, depositToCreate.depositaire.lastname);
-        AccountModel account = new AccountModel(depositToCreate.account.id, depositToCreate.account.money, new UserModel(depositToCreate.account.user.id, depositToCreate.account.user.firstname, depositToCreate.account.user.lastname));
+        if(depositToCreate.depositaire != null && depositToCreate.account != null && depositToCreate.amount != null && depositToCreate.amount >= 0)
+        {
+            UserModel depositaire = new UserModel(depositToCreate.depositaire.id, depositToCreate.depositaire.firstname, depositToCreate.depositaire.lastname);
+            AccountModel account = new AccountModel(depositToCreate.account.id, depositToCreate.account.money, new UserModel(depositToCreate.account.user.id, depositToCreate.account.user.firstname, depositToCreate.account.user.lastname));
 
-        DepositModel depositCreated =  depositRepository.save(new DepositModel(depositToCreate.amount, depositaire, account));
+            DepositModel depositCreated =  depositRepository.save(new DepositModel(depositToCreate.amount, depositaire, account));
+            return new DepositResult(true, depositCreated.getId(), depositCreated.getAmount(), userService.getById(depositCreated.getDepositaire().getId()), accountService.getById(depositCreated.getAccount().getId()));
+        }
+        else
+        {
+            return new DepositResult(false, null, depositToCreate.amount, depositToCreate.depositaire, depositToCreate.account);
+        }
 
-        return new Deposit(depositCreated.getId(), depositCreated.getAmount(), userService.getById(depositCreated.getDepositaire().getId()), accountService.getById(depositCreated.getAccount().getId()));
+
     }
 
     public Deposit update(Deposit depositToUpdate, Long amount, User depositaire, Account account)

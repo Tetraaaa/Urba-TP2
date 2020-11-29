@@ -1,9 +1,6 @@
 package org.cnam.sample.domain;
 
-import org.cnam.sample.domain.entity.Account;
-import org.cnam.sample.domain.entity.AccountToCreate;
-import org.cnam.sample.domain.entity.User;
-import org.cnam.sample.domain.entity.UserToCreate;
+import org.cnam.sample.domain.entity.*;
 import org.cnam.sample.repository.AccountRepository;
 import org.cnam.sample.repository.UserRepository;
 import org.cnam.sample.repository.model.AccountModel;
@@ -30,12 +27,20 @@ public class UserService {
         return new User(modelFound.getId(), modelFound.getFirstname(), modelFound.getLastname());
     }
 
-    public User create(UserToCreate userToCreate) {
-        UserModel userModelToCreate = new UserModel(userToCreate.firstname, userToCreate.lastname);
+    public UserResult create(UserToCreate userToCreate) {
 
-        UserModel userModelCreated = userRepository.save(userModelToCreate);
+        if(userToCreate.firstname != null && userToCreate.lastname != null)
+        {
+            UserModel userModelToCreate = new UserModel(userToCreate.firstname, userToCreate.lastname);
+            UserModel userModelCreated = userRepository.save(userModelToCreate);
+            return new UserResult(true, userModelCreated.getId(), userModelCreated.getFirstname(), userModelCreated.getLastname());
 
-        return new User(userModelCreated.getId(), userModelCreated.getFirstname(), userModelCreated.getLastname());
+        }
+        else
+        {
+            return new UserResult(false, null, userToCreate.firstname, userToCreate.lastname);
+        }
+
     }
 
     public User update(User userToUpdate, String firstname, String lastname) {

@@ -6,10 +6,7 @@ import org.cnam.sample.controller.dto.UserResponse;
 import org.cnam.sample.controller.dto.UserToCreateRequest;
 import org.cnam.sample.domain.AccountService;
 import org.cnam.sample.domain.UserService;
-import org.cnam.sample.domain.entity.Account;
-import org.cnam.sample.domain.entity.AccountToCreate;
-import org.cnam.sample.domain.entity.User;
-import org.cnam.sample.domain.entity.UserToCreate;
+import org.cnam.sample.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +27,7 @@ public class UserController {
         User userFound = userService.getById(id);
         if(userFound == null) return ResponseEntity.notFound().build();
 
-        UserResponse userResponse = new UserResponse(userFound.id, userFound.firstname, userFound.lastname);
+        UserResponse userResponse = new UserResponse(true, userFound.id, userFound.firstname, userFound.lastname);
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
@@ -40,9 +37,9 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(@RequestBody UserToCreateRequest userToCreateRequest) {
         UserToCreate userToCreate = new UserToCreate(userToCreateRequest.firstname, userToCreateRequest.lastname);
 
-        User userCreated = userService.create(userToCreate);
+        UserResult userResult = userService.create(userToCreate);
 
-        UserResponse userResponse = new UserResponse(userCreated.id, userCreated.firstname, userCreated.lastname);
+        UserResponse userResponse = new UserResponse(userResult.ok, userResult.id, userResult.firstname, userResult.lastname);
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
@@ -55,7 +52,7 @@ public class UserController {
 
         User userUpdate = userService.update(userFound, firstname, lastname);
 
-        UserResponse userResponse = new UserResponse(userUpdate.id, userUpdate.firstname, userUpdate.lastname);
+        UserResponse userResponse = new UserResponse(true, userUpdate.id, userUpdate.firstname, userUpdate.lastname);
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }

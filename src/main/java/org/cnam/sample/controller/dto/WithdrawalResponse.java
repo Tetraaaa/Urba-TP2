@@ -8,11 +8,11 @@ public class WithdrawalResponse {
 
     public Long amount;
 
-    public User beneficiaire;
+    public Account beneficiaire;
 
     public Account account;
 
-    public WithdrawalResponse(Long id, Long amount, User beneficiaire, Account account) {
+    public WithdrawalResponse(Long id, Long amount, Account beneficiaire, Account account) {
         this.id = id;
         this.amount = amount;
         this.beneficiaire = beneficiaire;

@@ -8,10 +8,7 @@ import org.cnam.sample.domain.AccountService;
 import org.cnam.sample.domain.DepositService;
 import org.cnam.sample.domain.UserService;
 import org.cnam.sample.domain.WithdrawalService;
-import org.cnam.sample.domain.entity.Deposit;
-import org.cnam.sample.domain.entity.DepositToCreate;
-import org.cnam.sample.domain.entity.Withdrawal;
-import org.cnam.sample.domain.entity.WithdrawalToCreate;
+import org.cnam.sample.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,11 +44,20 @@ public class WithdrawalController {
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<WithdrawalResponse> createWithdrawal(@RequestBody WithdrawalToCreateRequest withdrawalToCreateRequest) {
-        WithdrawalToCreate withdrawalToCreate = new WithdrawalToCreate(withdrawalToCreateRequest.amount, withdrawalToCreateRequest.beneficiaire, withdrawalToCreateRequest.account);
+        WithdrawalToConfirm withdrawalToConfirm = new WithdrawalToConfirm(withdrawalToCreateRequest.amount, withdrawalToCreateRequest.beneficiaire, withdrawalToCreateRequest.account);
+        WithdrawalResponse withdrawalResponse;
 
-        Withdrawal withdrawalCreated = withdrawalService.create(withdrawalToCreate);
+        WithdrawalResult withdrawalResult = withdrawalService.askForWithdrawal(withdrawalToConfirm);
+        if(withdrawalResult.ok)
+        {
+             withdrawalResponse = new WithdrawalResponse(withdrawalResult.id, withdrawalResult.amount, withdrawalResult.beneficiaire, withdrawalResult.account);
 
-        WithdrawalResponse withdrawalResponse = new WithdrawalResponse(withdrawalCreated.id, withdrawalCreated.amount, withdrawalCreated.beneficiaire, withdrawalCreated.account);
+        }
+        else
+        {
+             withdrawalResponse = new WithdrawalResponse(withdrawalResult.id, withdrawalResult.amount, withdrawalResult.beneficiaire, withdrawalResult.account);
+
+        }
 
         return new ResponseEntity<>(withdrawalResponse, HttpStatus.OK);
     }
@@ -62,7 +68,7 @@ public class WithdrawalController {
         Withdrawal withdrawalFound = withdrawalService.getById(id);
         if(withdrawalFound == null) return ResponseEntity.notFound().build();
 
-        Withdrawal withdrawalUpdated = withdrawalService.update(withdrawalFound, amount, userService.getById(beneficiaireId), accountService.getById(accountId));
+        Withdrawal withdrawalUpdated = withdrawalService.update(withdrawalFound, amount, accountService.getById(beneficiaireId), accountService.getById(accountId));
 
         WithdrawalResponse withdrawalResponse = new WithdrawalResponse(withdrawalUpdated.id, withdrawalUpdated.amount, withdrawalUpdated.beneficiaire, withdrawalUpdated.account);
 

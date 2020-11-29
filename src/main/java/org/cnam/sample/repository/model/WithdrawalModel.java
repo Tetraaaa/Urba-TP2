@@ -20,7 +20,7 @@ public class WithdrawalModel {
 
     @ManyToOne
     @JoinColumn( name = "beneficiaire" , insertable = false, updatable = false)
-    private UserModel beneficiaire;
+    private AccountModel beneficiaire;
 
     @ManyToOne
     @JoinColumn( name = "account" , insertable = false, updatable = false)
@@ -28,13 +28,13 @@ public class WithdrawalModel {
 
     public WithdrawalModel(){}
 
-    public WithdrawalModel(Long amount, UserModel beneficiaire, AccountModel account) {
+    public WithdrawalModel(Long amount, AccountModel beneficiaire, AccountModel account) {
         this.amount = amount;
         this.beneficiaire = beneficiaire;
         this.account = account;
     }
 
-    public WithdrawalModel(Long id, Long amount, UserModel beneficiaire, AccountModel account) {
+    public WithdrawalModel(Long id, Long amount, AccountModel beneficiaire, AccountModel account) {
         this.id = id;
         this.amount = amount;
         this.beneficiaire = beneficiaire;
@@ -57,11 +57,11 @@ public class WithdrawalModel {
         this.amount = amount;
     }
 
-    public UserModel getBeneficiaire() {
+    public AccountModel getBeneficiaire() {
         return beneficiaire;
     }
 
-    public void setBeneficiaire(UserModel beneficiaire) {
+    public void setBeneficiaire(AccountModel beneficiaire) {
         this.beneficiaire = beneficiaire;
     }
 
