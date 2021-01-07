@@ -32,6 +32,9 @@ public class DepositService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private DepositService depositService;
+
     public Deposit getById(Long id)
     {
         Optional<DepositModel> depositModelFound = depositRepository.findById(id);
@@ -41,6 +44,27 @@ public class DepositService {
         User depositaire = userService.getById(modelFound.getDepositaire().getId());
         Account account = accountService.getById(modelFound.getAccount().getId());
         return new Deposit(modelFound.getId(), modelFound.getAmount(), depositaire, account);
+    }
+
+    public DepositResult effectuerDepot(Long amount, User depositaire, Account account)
+    {
+        if(accountService.accountExists(account) && amount > 0)
+        {
+            accountService.crediterCompte(amount, account);
+            DepositToCreate depositToCreate = new DepositToCreate(amount, depositaire, account);
+            return depositService.create(depositToCreate);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void creerDepot(Long amount, User depositaire, Account account)
+    {
+        DepositToCreate depositToCreate = new DepositToCreate(amount, depositaire, account);
+
+        DepositResult depositResult = create(depositToCreate);
     }
 
     public DepositResult create(DepositToCreate depositToCreate)
@@ -57,8 +81,6 @@ public class DepositService {
         {
             return new DepositResult(false, null, depositToCreate.amount, depositToCreate.depositaire, depositToCreate.account);
         }
-
-
     }
 
     public Deposit update(Deposit depositToUpdate, Long amount, User depositaire, Account account)

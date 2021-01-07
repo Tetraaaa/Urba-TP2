@@ -79,4 +79,14 @@ public class AccountService {
             return new AccountResult(false, null, 0L, user);
         }
     }
+
+    public boolean accountExists(Account account)
+    {
+        return account != null;
+    }
+
+    public void crediterCompte(Long amount, Account account)
+    {
+        account.money += amount;
+    }
 }

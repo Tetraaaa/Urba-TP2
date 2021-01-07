@@ -50,6 +50,23 @@ public class DepositController {
         return new ResponseEntity<>(depositResponse, HttpStatus.OK);
     }
 
+    @PostMapping("/deposer")
+    @ResponseBody
+    public ResponseEntity<DepositResponse> effectuerDepot(@RequestBody DepositToCreateRequest depositToCreateRequest) {
+        DepositResponse depositResponse;
+        DepositResult depositResult = depositService.effectuerDepot(depositToCreateRequest.amount, depositToCreateRequest.depositaire, depositToCreateRequest.account);
+        if(depositResult != null)
+        {
+            depositResponse = new DepositResponse(true, depositResult.id, depositResult.amount, depositResult.depositaire, depositResult.account);
+        }
+        else
+        {
+            depositResponse = new DepositResponse(false, null, depositResult.amount, depositResult.depositaire, depositResult.account);
+        }
+
+        return new ResponseEntity<>(depositResponse, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity<DepositResponse> updateDeposit(@PathVariable("id") Long id, @PathParam("amount") Long amount, @PathParam("depositaireId") Long depositaireId, @PathParam("accountId") Long accountId) {
