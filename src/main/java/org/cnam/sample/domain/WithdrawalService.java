@@ -36,6 +36,9 @@ public class WithdrawalService {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private WithdrawalService withdrawalService;
+
     public Withdrawal getById(Long id)
     {
         Optional<WithdrawalModel> withdrawalModelFound = withdrawalRepository.findById(id);
@@ -92,5 +95,20 @@ public class WithdrawalService {
         AccountModel account = new AccountModel(withdrawalToDelete.account.id, withdrawalToDelete.account.money, new UserModel(withdrawalToDelete.account.user.id, withdrawalToDelete.account.user.firstname, withdrawalToDelete.account.user.lastname));
         WithdrawalModel withdrawalModel = new WithdrawalModel(withdrawalToDelete.id, withdrawalToDelete.amount, beneficiaire, account);
         withdrawalRepository.delete(withdrawalModel);
+    }
+
+    public WithdrawalResult effectuerRetrait(Long amount, Account beneficiaire, Account account)
+    {
+        if(accountService.accountExists(account) && amount > 0)
+        {
+            accountService.crediterCompte(amount, account);
+            WithdrawalToCreate withdrawalToCreate = new WithdrawalToCreate(amount, beneficiaire, account);
+            Withdrawal withdrawal = withdrawalService.create(withdrawalToCreate);
+            return new WithdrawalResult(true, withdrawal.id, withdrawal.amount, withdrawal.beneficiaire, withdrawal.account);
+        }
+        else
+        {
+            return null;
+        }
     }
 }

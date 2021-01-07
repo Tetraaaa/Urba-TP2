@@ -85,4 +85,21 @@ public class WithdrawalController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/retirer")
+    @ResponseBody
+    public ResponseEntity<WithdrawalResponse> effectuerRetrait(@RequestBody WithdrawalToCreateRequest withdrawalToCreateRequest) {
+        WithdrawalResponse withdrawalResponse;
+        WithdrawalResult withdrawalResult = withdrawalService.effectuerRetrait(withdrawalToCreateRequest.amount, withdrawalToCreateRequest.beneficiaire, withdrawalToCreateRequest.account);
+        if(withdrawalResult != null)
+        {
+            withdrawalResponse = new WithdrawalResponse(withdrawalResult.id, withdrawalResult.amount, withdrawalResult.beneficiaire, withdrawalResult.account);
+        }
+        else
+        {
+            withdrawalResponse = new WithdrawalResponse(null, withdrawalResult.amount, withdrawalResult.beneficiaire, withdrawalResult.account);
+        }
+
+        return new ResponseEntity<>(withdrawalResponse, HttpStatus.OK);
+    }
 }
