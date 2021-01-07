@@ -66,4 +66,17 @@ public class AccountService {
 
         accountRepository.delete(accountModelToDelete);
     }
+
+    public AccountResult ouvrirCompte(Long userId) {
+        User user = userService.getById(userId);
+        if(userService.userExists(user)) {
+            UserModel userModel = new UserModel(user);
+            AccountModel accountModelToCreate = new AccountModel(0L, userModel);
+
+            AccountModel accountModelCreated = accountRepository.save(accountModelToCreate);
+            return new AccountResult(true, accountModelCreated.getId(), accountModelCreated.getMoney(), userService.getById(accountModelCreated.getUser().getId()));
+        } else {
+            return new AccountResult(false, null, 0L, user);
+        }
+    }
 }

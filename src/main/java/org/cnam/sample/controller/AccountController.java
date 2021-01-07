@@ -66,4 +66,15 @@ public class AccountController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/ouvrir")
+    @ResponseBody
+    public ResponseEntity<AccountResponse> ouvrir(@PathParam("userId") Long userId) {
+
+        AccountResult accountResult = accountService.ouvrirCompte(userId);
+
+        AccountResponse accountResponse = new AccountResponse(accountResult.ok, accountResult.id, accountResult.money, accountResult.user);
+
+        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+    }
 }

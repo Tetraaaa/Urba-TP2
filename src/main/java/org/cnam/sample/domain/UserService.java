@@ -56,4 +56,8 @@ public class UserService {
 
         userRepository.delete(userModel);
     }
+
+    public boolean userExists(User user) {
+        return user != null;
+    }
 }
